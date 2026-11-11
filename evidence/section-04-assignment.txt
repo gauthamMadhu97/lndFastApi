@@ -1,0 +1,34 @@
+Recorded: 2026-11-13 11:15:48
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest tests/test_04_assignment.py -v
+
+============================= test session starts =============================
+collecting ... collected 25 items
+
+tests/test_04_assignment.py::TestAssign::test_assign_records_date_and_sets_status_br3 PASSED [  4%]
+tests/test_04_assignment.py::TestAssign::test_assign_defaults_to_today PASSED [  8%]
+tests/test_04_assignment.py::TestAssign::test_already_assigned_asset_refused_br1 PASSED [ 12%]
+tests/test_04_assignment.py::TestAssign::test_unavailable_asset_refused_br2[in_repair] PASSED [ 16%]
+tests/test_04_assignment.py::TestAssign::test_unavailable_asset_refused_br2[retired] PASSED [ 20%]
+tests/test_04_assignment.py::TestAssign::test_inactive_employee_refused_br5 PASSED [ 24%]
+tests/test_04_assignment.py::TestAssign::test_unknown_employee_404 PASSED [ 28%]
+tests/test_04_assignment.py::TestAssign::test_unknown_asset_404 PASSED   [ 32%]
+tests/test_04_assignment.py::TestAssign::test_future_date_refused PASSED [ 36%]
+tests/test_04_assignment.py::TestAssign::test_date_before_purchase_refused PASSED [ 40%]
+tests/test_04_assignment.py::TestAssign::test_date_overlapping_previous_holder_refused PASSED [ 44%]
+tests/test_04_assignment.py::TestAssign::test_bad_body_refused PASSED    [ 48%]
+tests/test_04_assignment.py::TestReturn::test_return_closes_assignment_br4 PASSED [ 52%]
+tests/test_04_assignment.py::TestReturn::test_returned_asset_can_be_assigned_again PASSED [ 56%]
+tests/test_04_assignment.py::TestReturn::test_return_of_unassigned_asset_refused PASSED [ 60%]
+tests/test_04_assignment.py::TestReturn::test_return_twice_refused PASSED [ 64%]
+tests/test_04_assignment.py::TestReturn::test_return_before_assign_date_refused PASSED [ 68%]
+tests/test_04_assignment.py::TestReturn::test_return_future_date_refused PASSED [ 72%]
+tests/test_04_assignment.py::TestReturn::test_return_unknown_asset_404 PASSED [ 76%]
+tests/test_04_assignment.py::TestHistory::test_history_newest_first PASSED [ 80%]
+tests/test_04_assignment.py::TestHistory::test_history_of_unknown_asset_404 PASSED [ 84%]
+tests/test_04_assignment.py::TestNoPartialRecords::test_refused_assign_writes_nothing PASSED [ 88%]
+tests/test_04_assignment.py::TestNoPartialRecords::test_failure_mid_assignment_is_rolled_back PASSED [ 92%]
+tests/test_04_assignment.py::TestNoPartialRecords::test_database_index_blocks_second_open_assignment PASSED [ 96%]
+tests/test_04_assignment.py::TestNoPartialRecords::test_refused_return_changes_nothing PASSED [100%]
+
+============================= 25 passed in 2.44s ==============================

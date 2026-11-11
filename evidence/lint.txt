@@ -1,0 +1,11 @@
+Recorded: 2026-11-13 11:16:49
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: ruff check --line-length 110 --select E,F,W,I,N,UP,B,SIM,ASYNC --exclude app/migrations/versions app tests
+
+All checks passed!
+
+Recorded: 2026-11-13 11:16:49
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: ruff format --check --line-length 110 --exclude app/migrations/versions app tests
+
+61 files already formatted

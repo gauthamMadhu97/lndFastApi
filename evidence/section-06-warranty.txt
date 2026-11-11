@@ -1,0 +1,21 @@
+Recorded: 2026-11-13 11:15:59
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest tests/test_06_warranty.py -v
+
+============================= test session starts =============================
+collecting ... collected 12 items
+
+tests/test_06_warranty.py::test_single_asset PASSED                      [  8%]
+tests/test_06_warranty.py::test_expired_warranty_reported PASSED         [ 16%]
+tests/test_06_warranty.py::test_twenty_assets_take_about_as_long_as_one PASSED [ 25%]
+tests/test_06_warranty.py::test_results_keep_request_order PASSED        [ 33%]
+tests/test_06_warranty.py::test_one_failure_does_not_lose_the_rest PASSED [ 41%]
+tests/test_06_warranty.py::test_hanging_lookup_times_out_without_blocking_others PASSED [ 50%]
+tests/test_06_warranty.py::test_unknown_tag_reported_others_returned PASSED [ 58%]
+tests/test_06_warranty.py::test_bad_request_refused[tags0] PASSED        [ 66%]
+tests/test_06_warranty.py::test_bad_request_refused[tags1] PASSED        [ 75%]
+tests/test_06_warranty.py::test_bad_request_refused[tags2] PASSED        [ 83%]
+tests/test_06_warranty.py::test_bad_request_refused[tags3] PASSED        [ 91%]
+tests/test_06_warranty.py::test_missing_body_refused PASSED              [100%]
+
+============================= 12 passed in 5.43s ==============================

@@ -1,0 +1,14 @@
+Recorded: 2026-11-13 11:15:52
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest tests/test_05_notification.py -v
+
+============================= test session starts =============================
+collecting ... collected 5 items
+
+tests/test_05_notification.py::test_assign_and_return_are_notified PASSED [ 20%]
+tests/test_05_notification.py::test_refused_assignment_is_not_notified PASSED [ 40%]
+tests/test_05_notification.py::test_caller_is_not_kept_waiting PASSED    [ 60%]
+tests/test_05_notification.py::test_failed_notification_does_not_undo_assignment PASSED [ 80%]
+tests/test_05_notification.py::test_failed_notification_does_not_undo_return PASSED [100%]
+
+============================== 5 passed in 2.85s ==============================
