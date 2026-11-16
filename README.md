@@ -184,6 +184,10 @@ The image runs as a non-root user, keeps the SQLite file in a `/data` volume, ha
 - **Observability.** Ship the JSON logs to a central store, add metrics (request rate, latency, error rate) and tracing; the request id is already there to join them up.
 - **Real HTTP clients for the two external systems**, with retries, backoff and a circuit breaker. The stubs sit behind a small `Protocol`, so they can be swapped without touching the routes.
 
+## Tools and assistance used
+
+I used Claude to write documentation and helper texts. In a final review it also made two small settings checks in `app/core/config.py` (minimum password length in production, and not printing setting values when one is refused), with their tests.
+
 ## What's not finished / known limits
 
 - Section 10 was run on Windows 11 with Docker Desktop (engine 29.9.2, WSL 2). The commands and their output are in `evidence/section-10-deployment.txt` and the screenshots sit next to it. The refused-start cases and a fresh healthy run at the end of that file were recorded later on Ubuntu 26.04 with Docker Engine 29.8.0, after the password-length check was added. The evidence files for section 9, lint and the full suite were re-recorded there at the same time.
