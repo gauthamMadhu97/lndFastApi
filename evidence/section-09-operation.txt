@@ -1,0 +1,37 @@
+Recorded: 2026-11-13 11:16:10
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest tests/test_09_operation.py tests/test_09_database_setup.py -v
+
+============================= test session starts =============================
+collecting ... collected 28 items
+
+tests/test_09_operation.py::TestDocs::test_docs_published_without_sign_in[/docs] PASSED [  3%]
+tests/test_09_operation.py::TestDocs::test_docs_published_without_sign_in[/redoc] PASSED [  7%]
+tests/test_09_operation.py::TestDocs::test_docs_published_without_sign_in[/openapi.json] PASSED [ 10%]
+tests/test_09_operation.py::TestDocs::test_grouped_by_area_with_descriptions PASSED [ 14%]
+tests/test_09_operation.py::TestDocs::test_every_operation_documented PASSED [ 17%]
+tests/test_09_operation.py::TestDocs::test_error_responses_documented PASSED [ 21%]
+tests/test_09_operation.py::TestDocs::test_bearer_auth_in_docs PASSED    [ 25%]
+tests/test_09_operation.py::TestConfiguration::test_defaults_work_locally PASSED [ 28%]
+tests/test_09_operation.py::TestConfiguration::test_settings_read_from_environment PASSED [ 32%]
+tests/test_09_operation.py::TestConfiguration::test_settings_read_from_env_file PASSED [ 35%]
+tests/test_09_operation.py::TestConfiguration::test_bad_setting_refused_at_startup[ACCESS_TOKEN_EXPIRE_MINUTES-0] PASSED [ 39%]
+tests/test_09_operation.py::TestConfiguration::test_bad_setting_refused_at_startup[ACCESS_TOKEN_EXPIRE_MINUTES-soon] PASSED [ 42%]
+tests/test_09_operation.py::TestConfiguration::test_bad_setting_refused_at_startup[APP_ENV-staging] PASSED [ 46%]
+tests/test_09_operation.py::TestConfiguration::test_bad_setting_refused_at_startup[LOG_LEVEL-LOUD] PASSED [ 50%]
+tests/test_09_operation.py::TestConfiguration::test_production_refuses_dev_secret PASSED [ 53%]
+tests/test_09_operation.py::TestConfiguration::test_production_refuses_default_passwords PASSED [ 57%]
+tests/test_09_operation.py::TestConfiguration::test_production_accepts_real_settings PASSED [ 60%]
+tests/test_09_operation.py::TestConfiguration::test_token_lifetime_comes_from_settings PASSED [ 64%]
+tests/test_09_operation.py::TestConfiguration::test_env_sample_lists_every_setting PASSED [ 67%]
+tests/test_09_operation.py::TestConfiguration::test_no_secret_hard_coded_in_app PASSED [ 71%]
+tests/test_09_operation.py::TestHealth::test_health_without_sign_in PASSED [ 75%]
+tests/test_09_operation.py::TestHealth::test_health_reports_database_down PASSED [ 78%]
+tests/test_09_operation.py::TestHealth::test_health_only_allows_get PASSED [ 82%]
+tests/test_09_database_setup.py::test_migrations_create_every_table PASSED [ 85%]
+tests/test_09_database_setup.py::test_migrations_match_the_models PASSED [ 89%]
+tests/test_09_database_setup.py::test_migrated_database_enforces_constraints PASSED [ 92%]
+tests/test_09_database_setup.py::test_migrating_twice_is_harmless PASSED [ 96%]
+tests/test_09_database_setup.py::test_setup_script_seeds_users_and_demo_data PASSED [100%]
+
+============================= 28 passed in 1.25s ==============================

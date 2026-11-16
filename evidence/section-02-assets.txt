@@ -1,0 +1,45 @@
+Recorded: 2026-11-13 11:15:40
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest tests/test_02_assets.py -v
+
+============================= test session starts =============================
+collecting ... collected 36 items
+
+tests/test_02_assets.py::TestCreate::test_create_asset PASSED            [  2%]
+tests/test_02_assets.py::TestCreate::test_every_allowed_category_accepted[laptop] PASSED [  5%]
+tests/test_02_assets.py::TestCreate::test_every_allowed_category_accepted[monitor] PASSED [  8%]
+tests/test_02_assets.py::TestCreate::test_every_allowed_category_accepted[phone] PASSED [ 11%]
+tests/test_02_assets.py::TestCreate::test_every_allowed_category_accepted[peripheral] PASSED [ 13%]
+tests/test_02_assets.py::TestCreate::test_unknown_category_refused[tablet] PASSED [ 16%]
+tests/test_02_assets.py::TestCreate::test_unknown_category_refused[LAPTOP ] PASSED [ 19%]
+tests/test_02_assets.py::TestCreate::test_unknown_category_refused[] PASSED [ 22%]
+tests/test_02_assets.py::TestCreate::test_unknown_category_refused[None] PASSED [ 25%]
+tests/test_02_assets.py::TestCreate::test_settable_statuses_accepted[available] PASSED [ 27%]
+tests/test_02_assets.py::TestCreate::test_settable_statuses_accepted[in_repair] PASSED [ 30%]
+tests/test_02_assets.py::TestCreate::test_settable_statuses_accepted[retired] PASSED [ 33%]
+tests/test_02_assets.py::TestCreate::test_unknown_status_refused PASSED  [ 36%]
+tests/test_02_assets.py::TestCreate::test_status_assigned_cannot_be_set_directly PASSED [ 38%]
+tests/test_02_assets.py::TestCreate::test_warranty_before_purchase_refused_br6 PASSED [ 41%]
+tests/test_02_assets.py::TestCreate::test_warranty_same_day_as_purchase_refused_br6 PASSED [ 44%]
+tests/test_02_assets.py::TestCreate::test_future_purchase_date_refused PASSED [ 47%]
+tests/test_02_assets.py::TestCreate::test_duplicate_tag_refused_br8 PASSED [ 50%]
+tests/test_02_assets.py::TestCreate::test_bad_tag_format_refused[ab] PASSED [ 52%]
+tests/test_02_assets.py::TestCreate::test_bad_tag_format_refused[has space] PASSED [ 55%]
+tests/test_02_assets.py::TestCreate::test_bad_tag_format_refused[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] PASSED [ 58%]
+tests/test_02_assets.py::TestCreate::test_bad_tag_format_refused[tag/slash] PASSED [ 61%]
+tests/test_02_assets.py::TestCreate::test_bad_date_refused PASSED        [ 63%]
+tests/test_02_assets.py::TestRetrieve::test_get_available_asset_has_no_holder PASSED [ 66%]
+tests/test_02_assets.py::TestRetrieve::test_get_assigned_asset_shows_holder PASSED [ 69%]
+tests/test_02_assets.py::TestRetrieve::test_get_missing_asset_404 PASSED [ 72%]
+tests/test_02_assets.py::TestUpdate::test_patch_name_and_status PASSED   [ 75%]
+tests/test_02_assets.py::TestUpdate::test_patch_warranty_against_stored_purchase_date_br6 PASSED [ 77%]
+tests/test_02_assets.py::TestUpdate::test_patch_bad_category_refused PASSED [ 80%]
+tests/test_02_assets.py::TestUpdate::test_patch_status_to_assigned_refused PASSED [ 83%]
+tests/test_02_assets.py::TestUpdate::test_patch_status_of_assigned_asset_refused PASSED [ 86%]
+tests/test_02_assets.py::TestUpdate::test_patch_to_taken_tag_refused_br8 PASSED [ 88%]
+tests/test_02_assets.py::TestUpdate::test_patch_missing_asset_404 PASSED [ 91%]
+tests/test_02_assets.py::TestDelete::test_delete_asset_and_its_history PASSED [ 94%]
+tests/test_02_assets.py::TestDelete::test_delete_assigned_asset_refused PASSED [ 97%]
+tests/test_02_assets.py::TestDelete::test_delete_missing_asset_404 PASSED [100%]
+
+============================= 36 passed in 2.66s ==============================

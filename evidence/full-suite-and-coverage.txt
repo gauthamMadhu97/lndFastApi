@@ -1,0 +1,66 @@
+Recorded: 2026-11-13 11:16:49
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest --cov=app --cov-report=term-missing
+
+........................................................................ [ 32%]
+........................................................................ [ 65%]
+........................................................................ [ 98%]
+...                                                                      [100%]
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.13-final-0 _______________
+
+Name                                             Stmts   Miss  Cover   Missing
+------------------------------------------------------------------------------
+app\__init__.py                                      0      0   100%
+app\api\__init__.py                                  0      0   100%
+app\api\deps.py                                     41      0   100%
+app\api\responses.py                                 5      0   100%
+app\api\routers\__init__.py                          0      0   100%
+app\api\routers\assets.py                           25      0   100%
+app\api\routers\assignments.py                      24      0   100%
+app\api\routers\auth.py                             19      0   100%
+app\api\routers\employees.py                        25      0   100%
+app\api\routers\health.py                           18      0   100%
+app\api\routers\warranty.py                         17      0   100%
+app\core\__init__.py                                 0      0   100%
+app\core\config.py                                  48      2    96%   52, 61
+app\core\context.py                                  4      0   100%
+app\core\errors.py                                  62      0   100%
+app\core\logging.py                                 24      0   100%
+app\core\security.py                                18      0   100%
+app\db\__init__.py                                   0      0   100%
+app\db\base.py                                       5      0   100%
+app\db\session.py                                   24      5    79%   22, 35-39
+app\init_db.py                                      51      3    94%   115-116, 130
+app\integrations\__init__.py                         0      0   100%
+app\integrations\notifier.py                        33      0   100%
+app\integrations\warranty_client.py                 22      0   100%
+app\main.py                                         24      0   100%
+app\middleware\__init__.py                           0      0   100%
+app\middleware\request_context.py                   62      1    98%   106
+app\migrations\env.py                               23      4    83%   18-25, 45
+app\migrations\versions\0001_initial_schema.py      29     10    66%   81-92
+app\models\__init__.py                               5      0   100%
+app\models\asset.py                                 20      0   100%
+app\models\assignment.py                            17      0   100%
+app\models\employee.py                              10      0   100%
+app\models\enums.py                                 14      0   100%
+app\models\user.py                                  10      0   100%
+app\schemas\__init__.py                              0      0   100%
+app\schemas\asset.py                                68      1    99%   69
+app\schemas\assignment.py                           22      0   100%
+app\schemas\auth.py                                 12      0   100%
+app\schemas\common.py                               23      0   100%
+app\schemas\employee.py                             31      0   100%
+app\schemas\health.py                                6      0   100%
+app\schemas\warranty.py                             25      0   100%
+app\services\__init__.py                             0      0   100%
+app\services\_db.py                                 17      0   100%
+app\services\asset_service.py                       76      4    95%   81-82, 115-116
+app\services\assignment_service.py                  49      0   100%
+app\services\employee_service.py                    58      4    93%   45-46, 61-62
+app\services\user_service.py                        25      0   100%
+app\services\warranty_service.py                    24      0   100%
+------------------------------------------------------------------------------
+TOTAL                                             1115     34    97%
+219 passed in 35.27s

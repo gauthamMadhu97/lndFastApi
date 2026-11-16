@@ -1,0 +1,14 @@
+# virtual environment and Python caches
+.venv/
+__pycache__/
+*.pyc
+
+# real settings files (the .sample versions are committed)
+.env
+docker.env
+
+# test and lint output
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/

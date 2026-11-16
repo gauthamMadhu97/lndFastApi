@@ -1,0 +1,33 @@
+Recorded: 2026-11-13 11:15:44
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest tests/test_03_search.py -v
+
+============================= test session starts =============================
+collecting ... collected 24 items
+
+tests/test_03_search.py::TestFilter::test_list_everything PASSED         [  4%]
+tests/test_03_search.py::TestFilter::test_filter_by_status PASSED        [  8%]
+tests/test_03_search.py::TestFilter::test_filter_by_category PASSED      [ 12%]
+tests/test_03_search.py::TestFilter::test_filter_by_status_and_category PASSED [ 16%]
+tests/test_03_search.py::TestSearch::test_search_by_name_case_insensitive PASSED [ 20%]
+tests/test_03_search.py::TestSearch::test_search_by_partial_tag PASSED   [ 25%]
+tests/test_03_search.py::TestSearch::test_search_combined_with_filter PASSED [ 29%]
+tests/test_03_search.py::TestSearch::test_search_no_match_is_empty_not_error PASSED [ 33%]
+tests/test_03_search.py::TestSearch::test_wildcard_characters_are_literal PASSED [ 37%]
+tests/test_03_search.py::TestPaging::test_pages_and_total PASSED         [ 41%]
+tests/test_03_search.py::TestPaging::test_pages_do_not_overlap PASSED    [ 45%]
+tests/test_03_search.py::TestPaging::test_employee_list_is_paged_too PASSED [ 50%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params0] PASSED [ 54%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params1] PASSED [ 58%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params2] PASSED [ 62%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params3] PASSED [ 66%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params4] PASSED [ 70%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params5] PASSED [ 75%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params6] PASSED [ 79%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params7] PASSED [ 83%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params8] PASSED [ 87%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params9] PASSED [ 91%]
+tests/test_03_search.py::TestRefused::test_disallowed_values_refused[params10] PASSED [ 95%]
+tests/test_03_search.py::TestRefused::test_disallowed_value_in_history_paging PASSED [100%]
+
+============================= 24 passed in 2.18s ==============================

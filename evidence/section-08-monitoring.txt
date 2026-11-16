@@ -1,0 +1,32 @@
+Recorded: 2026-11-13 11:16:08
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest tests/test_08_monitoring.py -v
+
+============================= test session starts =============================
+collecting ... collected 23 items
+
+tests/test_08_monitoring.py::TestRequestReference::test_every_response_has_a_reference PASSED [  4%]
+tests/test_08_monitoring.py::TestRequestReference::test_reference_matches_error_body PASSED [  8%]
+tests/test_08_monitoring.py::TestRequestReference::test_caller_supplied_reference_is_kept PASSED [ 13%]
+tests/test_08_monitoring.py::TestRequestReference::test_unsafe_caller_reference_is_replaced[short] PASSED [ 17%]
+tests/test_08_monitoring.py::TestRequestReference::test_unsafe_caller_reference_is_replaced[has spaces in it] PASSED [ 21%]
+tests/test_08_monitoring.py::TestRequestReference::test_unsafe_caller_reference_is_replaced[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] PASSED [ 26%]
+tests/test_08_monitoring.py::TestRequestReference::test_unsafe_caller_reference_is_replaced[inject"quote"here] PASSED [ 30%]
+tests/test_08_monitoring.py::TestTiming::test_time_taken_returned PASSED [ 34%]
+tests/test_08_monitoring.py::TestTiming::test_slow_request_reports_longer_time PASSED [ 39%]
+tests/test_08_monitoring.py::TestAccessLog::test_successful_request_logged PASSED [ 43%]
+tests/test_08_monitoring.py::TestAccessLog::test_failed_request_logged PASSED [ 47%]
+tests/test_08_monitoring.py::TestAccessLog::test_unknown_route_logged PASSED [ 52%]
+tests/test_08_monitoring.py::TestAccessLog::test_log_line_is_json PASSED [ 56%]
+tests/test_08_monitoring.py::TestFailedRequestsToo::test_headers_on_errors[GET-/assets-401] PASSED [ 60%]
+tests/test_08_monitoring.py::TestFailedRequestsToo::test_headers_on_errors[GET-/nowhere-404] PASSED [ 65%]
+tests/test_08_monitoring.py::TestFailedRequestsToo::test_headers_on_errors[PUT-/health-405] PASSED [ 69%]
+tests/test_08_monitoring.py::TestFailedRequestsToo::test_headers_on_validation_error PASSED [ 73%]
+tests/test_08_monitoring.py::TestFailedRequestsToo::test_unhandled_error_gets_reference_and_json PASSED [ 78%]
+tests/test_08_monitoring.py::TestCors::test_preflight_from_allowed_origin PASSED [ 82%]
+tests/test_08_monitoring.py::TestCors::test_preflight_from_other_origin_refused PASSED [ 86%]
+tests/test_08_monitoring.py::TestCors::test_browser_can_read_reference_headers PASSED [ 91%]
+tests/test_08_monitoring.py::TestCors::test_simple_request_from_other_origin_gets_no_cors_header PASSED [ 95%]
+tests/test_08_monitoring.py::TestCors::test_cors_headers_on_a_crash PASSED [100%]
+
+============================= 23 passed in 1.96s ==============================

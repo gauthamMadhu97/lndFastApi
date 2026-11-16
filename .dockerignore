@@ -1,0 +1,17 @@
+.venv/
+.git/
+.env
+docker.env
+*.sample
+*.db
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+tests/
+evidence/
+*.md
+Dockerfile
+.dockerignore

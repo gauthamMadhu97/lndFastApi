@@ -1,0 +1,27 @@
+Recorded: 2026-11-13 11:15:36
+Python 3.12.13 on Windows-11-10.0.26300-SP0
+Command: pytest tests/test_01_employees.py -v
+
+============================= test session starts =============================
+collecting ... collected 18 items
+
+tests/test_01_employees.py::TestCreate::test_create_employee PASSED      [  5%]
+tests/test_01_employees.py::TestCreate::test_duplicate_email_refused_br8 PASSED [ 11%]
+tests/test_01_employees.py::TestCreate::test_invalid_email_refused PASSED [ 16%]
+tests/test_01_employees.py::TestCreate::test_missing_and_blank_fields_refused PASSED [ 22%]
+tests/test_01_employees.py::TestCreate::test_overlong_name_refused PASSED [ 27%]
+tests/test_01_employees.py::TestCreate::test_unknown_field_refused PASSED [ 33%]
+tests/test_01_employees.py::TestRetrieve::test_get_one PASSED            [ 38%]
+tests/test_01_employees.py::TestRetrieve::test_get_missing_is_404 PASSED [ 44%]
+tests/test_01_employees.py::TestRetrieve::test_get_non_integer_id_is_422 PASSED [ 50%]
+tests/test_01_employees.py::TestList::test_list_all_and_active_only PASSED [ 55%]
+tests/test_01_employees.py::TestList::test_list_rejects_bad_active_value PASSED [ 61%]
+tests/test_01_employees.py::TestUpdate::test_patch_changes_only_given_fields PASSED [ 66%]
+tests/test_01_employees.py::TestUpdate::test_patch_to_existing_email_refused_br8 PASSED [ 72%]
+tests/test_01_employees.py::TestUpdate::test_patch_missing_employee_404 PASSED [ 77%]
+tests/test_01_employees.py::TestDelete::test_delete_employee PASSED      [ 83%]
+tests/test_01_employees.py::TestDelete::test_delete_employee_holding_asset_refused_br7 PASSED [ 88%]
+tests/test_01_employees.py::TestDelete::test_delete_after_return_keeps_history PASSED [ 94%]
+tests/test_01_employees.py::TestDelete::test_delete_missing_employee_404 PASSED [100%]
+
+============================= 18 passed in 1.21s ==============================
