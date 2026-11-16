@@ -6,10 +6,14 @@ from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 # Only good enough for a laptop. Startup is refused if this is still set in production.
 DEV_SECRET_KEY = "dev-secret-change-me-before-deploying-anywhere"
+MIN_PROD_PASSWORD_LENGTH = 12
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    # hide_input_in_errors: a refused setting must not print the secrets and passwords to the log
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore", hide_input_in_errors=True
+    )
 
     app_name: str = "AssetDesk"
     app_version: str = "1.0.0"
@@ -54,6 +58,11 @@ class Settings(BaseSettings):
             defaults = {fields["admin_password"].default, fields["staff_password"].default}
             if {self.admin_password, self.staff_password} & defaults:
                 raise ValueError("ADMIN_PASSWORD and STAFF_PASSWORD must be changed in production")
+            if min(len(self.admin_password), len(self.staff_password)) < MIN_PROD_PASSWORD_LENGTH:
+                raise ValueError(
+                    f"ADMIN_PASSWORD and STAFF_PASSWORD must be {MIN_PROD_PASSWORD_LENGTH}+ characters "
+                    "in production"
+                )
         return self
 
     @property

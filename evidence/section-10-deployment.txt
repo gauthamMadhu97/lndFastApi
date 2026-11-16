@@ -199,3 +199,81 @@ INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 {"ts": "2026-11-13T05:43:13.435+00:00", "level": "INFO", "logger": "assetdesk.access", "msg": "request", "request_id": "9822b62bf4d744538b79aec5c051169b", "method": "GET", "operation": "health", "path": "/health", "status": 200, "outcome": "success", "duration_ms": 1.32}
 {"ts": "2026-11-13T05:43:13.550+00:00", "level": "INFO", "logger": "assetdesk.access", "msg": "request", "request_id": "b943aae86fd4460c861c2fa0691d6516", "method": "GET", "operation": "list_assets", "path": "/assets", "status": 401, "outcome": "failure", "duration_ms": 1.81}
 
+
+==============================================================================
+Refused start (10.1 negative case) and a fresh healthy run
+Recorded 2026-11-16 21:52:58 on Ubuntu 26.04.1 LTS, Docker Engine 29.8.0
+The image was rebuilt after adding the 12-character password check and
+hiding setting values from validation errors (app/core/config.py).
+==============================================================================
+
+$ docker build -q -t assetdesk:1.0 .
+sha256:fa5a3344b10c1b2baf94c99fabca9a49c40b175e01be51d20facac8c33cd2d14
+
+# 1. Settings file left as the sample: SECRET_KEY and passwords are empty
+$ docker run -d --name assetdesk -p 8000:8000 --env-file docker.env.sample -v assetdesk-data:/data assetdesk:1.0
+d7fabc87e7d1b27434e4777259826508c2e099de385e205d47d795f179aa3c95
+
+$ docker ps -a --filter name=assetdesk
+CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS                              PORTS     NAMES
+d7fabc87e7d1   assetdesk:1.0   "sh -c 'python -m ap…"   2 seconds ago   Exited (1) Less than a second ago             assetdesk
+
+$ docker logs assetdesk 2>&1 | tail -3
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Settings
+  Value error, SECRET_KEY must be set to a random value of 32+ characters in production [type=value_error]
+    For further information visit https://errors.pydantic.dev/2.14/v/value_error
+
+$ curl -s -i --max-time 3 http://localhost:8000/health
+(no answer: the container has exited, nothing is listening on port 8000)
+
+$ docker rm assetdesk
+assetdesk
+
+# 2. Real SECRET_KEY, but ADMIN_PASSWORD overridden with a short value
+$ docker run -d --name assetdesk -p 8000:8000 --env-file docker.env -e ADMIN_PASSWORD=short -v assetdesk-data:/data assetdesk:1.0
+e7933cf348bd491a12f810f9ebb76dc21ffe57b8ddea01ac4ba142959a0a7fef
+
+$ docker ps -a --filter name=assetdesk
+CONTAINER ID   IMAGE           COMMAND                  CREATED        STATUS                              PORTS     NAMES
+e7933cf348bd   assetdesk:1.0   "sh -c 'python -m ap…"   1 second ago   Exited (1) Less than a second ago             assetdesk
+
+$ docker logs assetdesk 2>&1 | tail -3
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Settings
+  Value error, ADMIN_PASSWORD and STAFF_PASSWORD must be 12+ characters in production [type=value_error]
+    For further information visit https://errors.pydantic.dev/2.14/v/value_error
+
+$ docker rm assetdesk
+assetdesk
+
+# 3. Proper settings: the container starts and reports healthy
+$ docker run -d --name assetdesk -p 8000:8000 --env-file docker.env -v assetdesk-data:/data assetdesk:1.0
+fba353141e9b175339990f3eef175f9233ef434ba50b35f0f0960eafe10f72d7
+
+$ docker ps --filter name=assetdesk
+CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS                   PORTS                                         NAMES
+fba353141e9b   assetdesk:1.0   "sh -c 'python -m ap…"   6 seconds ago   Up 6 seconds (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp   assetdesk
+
+$ docker inspect --format {{.State.Health.Status}} assetdesk
+healthy
+
+$ curl -s -i http://localhost:8000/health
+HTTP/1.1 200 OK
+date: Mon, 16 Nov 2026 16:23:08 GMT
+content-length: 49
+content-type: application/json
+vary: Origin
+x-request-id: 1c1a11c0f188432d8fda2228303fc3c1
+x-process-time-ms: 1.10
+
+{"status":"ok","version":"1.0.0","database":"ok"}
+$ curl -s -i http://localhost:8000/assets
+HTTP/1.1 401 Unauthorized
+date: Mon, 16 Nov 2026 16:23:08 GMT
+www-authenticate: Bearer
+content-length: 116
+content-type: application/json
+vary: Origin
+x-request-id: c0bcdf0a457a436c92e1fb2ddaab61e2
+x-process-time-ms: 0.84
+
+{"error":{"code":"NOT_AUTHENTICATED","message":"Not authenticated","request_id":"c0bcdf0a457a436c92e1fb2ddaab61e2"}}

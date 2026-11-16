@@ -100,6 +100,30 @@ class TestConfiguration:
         with pytest.raises(ValidationError, match="ADMIN_PASSWORD"):
             Settings(_env_file=None, app_env="production", secret_key="k" * 40)
 
+    @pytest.mark.parametrize("password", ["", "short-pw"])
+    def test_production_refuses_empty_or_short_passwords(self, password):
+        with pytest.raises(ValidationError, match="12\\+ characters"):
+            Settings(
+                _env_file=None,
+                app_env="production",
+                secret_key="k" * 40,
+                admin_password=password,
+                staff_password="a-real-staff-password",
+            )
+
+    def test_refused_settings_do_not_echo_secrets(self):
+        with pytest.raises(ValidationError) as exc:
+            Settings(
+                _env_file=None,
+                app_env="production",
+                secret_key="a-secret-key-that-is-long-enough-to-pass",
+                admin_password="short",
+                staff_password="a-real-staff-password",
+            )
+        message = str(exc.value)
+        assert "a-real-staff-password" not in message
+        assert "a-secret-key-that-is-long-enough-to-pass" not in message
+
     def test_production_accepts_real_settings(self):
         s = Settings(
             _env_file=None,

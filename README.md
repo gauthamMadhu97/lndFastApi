@@ -8,7 +8,7 @@ Once it's running, the API docs are at http://localhost:8000/docs (Swagger) and 
 
 | | |
 |---|---|
-| OS | Windows 11 (build 26300) |
+| OS | Windows 11 (build 26300); tests, lint and the last section 10 run repeated on Ubuntu 26.04 (Python 3.12.3, SQLite 3.46.1, Docker Engine 29.8.0) |
 | Python | 3.12.13 (should work on 3.11+) |
 | Database | SQLite 3.50.4 (the one bundled with Python) |
 | Container base image | python:3.12-slim |
@@ -56,7 +56,7 @@ curl.exe -s http://localhost:8000/assets -H "Authorization: Bearer <access_token
 
 ### Configuration
 
-All settings are read from environment variables or a `.env` file (`app/core/config.py`, using pydantic-settings). Every setting is listed with its default in `.env.sample`. Nothing secret is in the code. With `APP_ENV=production` the service refuses to start if `SECRET_KEY` is the dev default or shorter than 32 characters, or if the default account passwords haven't been changed.
+All settings are read from environment variables or a `.env` file (`app/core/config.py`, using pydantic-settings). Every setting is listed with its default in `.env.sample`. Nothing secret is in the code. With `APP_ENV=production` the service refuses to start if `SECRET_KEY` is the dev default or shorter than 32 characters, or if the account passwords are still the dev defaults or shorter than 12 characters.
 
 ## 2. Running the tests
 
@@ -75,6 +75,8 @@ pytest --cov=app --cov-report=term-missing   # coverage (currently 97%)
 ruff check --line-length 110 --select E,F,W,I,N,UP,B,SIM,ASYNC --exclude app/migrations/versions app tests
 ruff format --check --line-length 110 --exclude app/migrations/versions app tests
 ```
+
+The same settings are in `ruff.toml`, so plain `ruff check .` and `ruff format --check .` give the same result.
 
 The files in `evidence/` are the output of `pytest tests/<file> -v` for each section, plus the coverage and lint runs above.
 
@@ -129,7 +131,7 @@ Status codes: 401 no/bad token, 403 wrong role, 404 not found, 409 business rule
 - **Foreign keys** are switched on for every SQLite connection (`PRAGMA foreign_keys=ON` in `db/session.py`); SQLite ignores them otherwise.
 - **Status `assigned`** can't be set through POST/PATCH on assets, only by the assignment endpoint, otherwise BR3 could be bypassed. The status also can't be changed while the asset is assigned.
 - **Middleware.** A pure ASGI middleware adds `X-Request-ID` and `X-Process-Time-Ms` to every response and writes one JSON log line per request (operation, route, status, outcome, duration, request id). A second middleware inside CORS turns unexpected exceptions into a JSON 500, so crashes also get the headers, the CORS headers and a log line. CORS exposes the two headers so browser code can read them.
-- **Passwords.** Stored as bcrypt hashes. Request bodies are never logged, and validation errors don't echo input back, so a password can't leak through a 422 either. Logins for unknown users still do a bcrypt comparison, so response time doesn't reveal which usernames exist.
+- **Passwords.** Stored as bcrypt hashes. Request bodies are never logged, and validation errors don't echo input back, so a password can't leak through a 422 either. The same goes for settings refused at startup: the error names the setting but not its value. Logins for unknown users still do a bcrypt comparison, so response time doesn't reveal which usernames exist.
 - **Roles** are re-read from the database on each request rather than trusted from the token, so demoting or deleting a user takes effect immediately.
 
 ## 5. Deployment (section 10)
@@ -152,7 +154,7 @@ CORS_ORIGINS=http://localhost:5173
 LOG_LEVEL=INFO
 ```
 
-The container won't start if `SECRET_KEY` or the passwords are missing or left at the dev defaults. Then:
+The container won't start if `SECRET_KEY` is missing or shorter than 32 characters, or if a password is the dev default or shorter than 12 characters. Then:
 
 ```powershell
 docker build -t assetdesk:1.0 .
@@ -161,7 +163,9 @@ docker ps                               # STATUS should become "(healthy)" withi
 curl.exe -i http://localhost:8000/health
 ```
 
-These commands and their output are recorded in `evidence/section-10-deployment.txt`.
+If `docker ps` shows nothing, the container has exited: `docker ps -a` shows `Exited (1)` and `docker logs assetdesk` says which setting was refused.
+
+These commands and their output are recorded in `evidence/section-10-deployment.txt`, together with the refused case: the same image started with an empty `SECRET_KEY`, and with a too-short password, exits instead of serving.
 
 Screenshots in `evidence/`:
 - `section-10-deployment-docker-ps.png`: `docker ps` showing the container as healthy
@@ -182,7 +186,7 @@ The image runs as a non-root user, keeps the SQLite file in a `/data` volume, ha
 
 ## What's not finished / known limits
 
-- Section 10 was run on Windows 11 with Docker Desktop (engine 29.9.2, WSL 2). The commands and their output are in `evidence/section-10-deployment.txt` and the screenshots sit next to it.
+- Section 10 was run on Windows 11 with Docker Desktop (engine 29.9.2, WSL 2). The commands and their output are in `evidence/section-10-deployment.txt` and the screenshots sit next to it. The refused-start cases and a fresh healthy run at the end of that file were recorded later on Ubuntu 26.04 with Docker Engine 29.8.0, after the password-length check was added. The evidence files for section 9, lint and the full suite were re-recorded there at the same time.
 - The notifier and warranty source are stubs, as the brief says. The notifier keeps its record in memory, so it resets when the service restarts.
 - There is no endpoint for managing sign-in users; the two accounts come from configuration.
 
